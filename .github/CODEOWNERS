@@ -1,0 +1,3 @@
+.github/                                    @moshekaplan
+pyproject.toml                              @moshekaplan
+src/google-voice-takeout-parser/_version.py @moshekaplan

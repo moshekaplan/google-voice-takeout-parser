@@ -1,0 +1,102 @@
+name: "Publish"
+
+on:
+  push:
+    tags:
+      - "*"
+
+permissions:
+  contents: read
+
+jobs:
+
+  Build:
+    name: "Build"
+    runs-on: "ubuntu-latest"
+    outputs:
+      hashes: ${{ steps.hash.outputs.hashes }}
+
+    steps:
+    - name: "Checkout repository"
+      uses: "actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b"
+
+    - name: "Setup Python"
+      uses: "actions/setup-python@2c3dd9e7e29afd70cc0950079bde6c979d1f69f9"
+      with:
+        python-version: "3.x"
+
+    - name: "Install dependencies"
+      run: |
+        python -m pip install -r requirements/publish.txt
+
+    - name: "Build dists"
+      # Uses 'SOURCE_DATE_EPOCH' for build reproducibility.
+      run: |
+        SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct) \
+        python -m build
+
+    # Create hashes of all the built distributables.
+    # This is the input for "subject" of the SLSA builder.
+    - name: "Generate hashes"
+      id: hash
+      run: |
+        cd dist && echo "hashes=$(sha256sum * | base64 -w0)" >> $GITHUB_OUTPUT
+
+    - name: "Upload dists"
+      uses: "actions/upload-artifact@83fd05a356d7e2593de66fc9913b3002723633cb"
+      with:
+        name: "dist"
+        path: "dist/"
+        if-no-files-found: error
+        retention-days: 5
+
+  Provenance:
+    needs: ["Build"]
+    uses: "slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v1.5.0"
+    permissions:
+      actions: read
+      id-token: write
+      # contents: write is only needed to upload the
+      # attestation to the GitHub release.
+      contents: write
+    with:
+      base64-subjects: "${{ needs.Build.outputs.hashes }}"
+      upload-assets: true
+
+  Publish:
+    name: "Publish"
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: ["Build", "Provenance"]
+    runs-on: "ubuntu-latest"
+
+    permissions:
+      # contents: write is only needed to upload the
+      # dists to the GitHub release.
+      contents: write
+
+      # This permission allows for the gh-action-pypi-publish
+      # step to access GitHub OpenID Connect tokens.
+      id-token: write
+
+    # This job requires the 'publish' GitHub Environment to run.
+    # This value is also set in the Trusted Publisher.
+    environment:
+      name: "publish"
+
+    # Now that we've built and attested to the distributables
+    # provenance we can upload them to PyPI and add to the GitHub release.
+    steps:
+    - name: "Download dists"
+      uses: "actions/download-artifact@9782bd6a9848b53b110e712e20e42d89988822b7"
+      with:
+        name: "dist"
+        path: "dist/"
+
+    - name: "Upload dists to GitHub Release"
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      run: |
+        gh release upload ${{ github.ref_name }} dist/* --repo ${{ github.repository }}
+
+    - name: "Publish dists to PyPI"
+      uses: "pypa/gh-action-pypi-publish@0bf742be3ebe032c25dd15117957dc15d0cfc38d"
