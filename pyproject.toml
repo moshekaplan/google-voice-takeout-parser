@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "google-voice-takeout-parser"
 description = "Python package for parsing Google Voice takeout data."
 authors = [
-    {name = "Moshe Kaplan", email = "sethmichaellarson@gmail.com"},
+    {name = "Moshe Kaplan", email = "me@moshekaplan.com"},
 ]
 readme = "README.md"
 license = {file = "LICENSE"}
@@ -17,7 +17,7 @@ dynamic = ["version"]
 Source = "https://github.com/moshekaplan/google-voice-takeout-parser"
 
 [tool.hatch.version]
-path = "src/google-voice-takeout-parser/_version.py"
+path = "src/google_voice_takeout_parser/_version.py"
 
 [tool.hatch.build.targets.sdist]
 include = [
@@ -27,7 +27,7 @@ include = [
 ]
 
 [tool.scriv]
-version = "literal: src/google-voice-takeout-parser/_version.py: __version__"
+version = "literal: src/google_voice_takeout_parser/_version.py: __version__"
 fragment_directory = "newsfragments"
 format = "md"
 md_header_level = "2"

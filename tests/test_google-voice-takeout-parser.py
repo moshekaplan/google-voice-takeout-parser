@@ -1,8 +1,8 @@
 import re
 
-import google-voice-takeout-parser
+import google_voice_takeout_parser
 
 
 def test_version() -> None:
-    assert isinstance(google-voice-takeout-parser.__version__, str)
-    assert re.match(r"^[0-9][0-9\.]*[0-9]$", google-voice-takeout-parser.__version__)
+    assert isinstance(google_voice_takeout_parser.__version__, str)
+    assert re.match(r"^[0-9][0-9\.]*[0-9]$", google_voice_takeout_parser.__version__)
