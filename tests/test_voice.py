@@ -2,7 +2,7 @@ import os.path
 
 import google_voice_takeout_parser
 
-TEST_DATA_DIR = "test_data"
+TEST_DATA_DIR = os.path.join("tests", "test_data")
 
 
 def test_missed_call_number() -> None:
