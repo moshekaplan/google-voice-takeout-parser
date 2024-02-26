@@ -59,13 +59,13 @@ def test_outgoing_conversation() -> None:
     test_fpath = os.path.join(TEST_DATA_DIR, test_file)
     parsed_text = google_voice_takeout_parser.parse_file(test_fpath)
     expected_result = [{'data_type': 'TEXT_MESSAGE', 'direction': 'OUTGOING', 'duration': 'N/A',
-                        'filename': 'Text - outgoing conversation.html', 'originating_name': 'Me',
+                        'filename': 'Text - Outgoing conversation.html', 'originating_name': 'Me',
                         'originating_phone_number': '+11015550111', 'recipient_names': [''],
                         'recipient_phone_numbers': ['+11025550122'], 'tags': 'Text,Inbox',
                         'timestamp': '2023-08-26 21:57:02 -0400', 'user_deleted': False, 'media_files': [],
                         'transcript': 'N/A', 'text_message': 'STOP'},
                        {'data_type': 'TEXT_MESSAGE', 'direction': 'INCOMING', 'duration': 'N/A',
-                        'filename': 'Text - outgoing conversation.html', 'originating_name': '',
+                        'filename': 'Text - Outgoing conversation.html', 'originating_name': '',
                         'originating_phone_number': '+11025550122', 'recipient_names': ['Google Voice Takeout Subject'],
                         'recipient_phone_numbers': [''], 'tags': 'Text,Inbox', 'timestamp': '2023-08-26 21:57:07 -0400',
                         'user_deleted': False, 'media_files': [], 'transcript': 'N/A',
