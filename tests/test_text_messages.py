@@ -55,7 +55,7 @@ def test_outbound_with_name() -> None:
 
 
 def test_outgoing_conversation() -> None:
-    test_file = "Text - outgoing conversation.html"
+    test_file = "Text - Outgoing conversation.html"
     test_fpath = os.path.join(TEST_DATA_DIR, test_file)
     parsed_text = google_voice_takeout_parser.parse_file(test_fpath)
     expected_result = [{'data_type': 'TEXT_MESSAGE', 'direction': 'OUTGOING', 'duration': 'N/A',
