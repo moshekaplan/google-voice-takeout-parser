@@ -141,9 +141,9 @@ idna==3.4 \
 jaraco-classes==3.2.3 \
     --hash=sha256:2353de3288bc6b82120752201c6b1c1a14b058267fa424ed5ce5984e3b922158 \
     --hash=sha256:89559fa5c1d3c34eff6f631ad80bb21f378dbcbb35dd161fd2c6b93f5be2f98a
-jaraco-context==4.3.0 \
-    --hash=sha256:4dad2404540b936a20acedec53355bdaea223acb88fd329fa6de9261c941566e \
-    --hash=sha256:5d9e95ca0faa78943ed66f6bc658dd637430f16125d86988e77844c741ff2f11
+jaraco-context==5.1.0 \
+    --hash=sha256:0e4161ebbaeead78850b4ca5465b5853217cf23ad74ec82d00ebfb69d8ea5fcb \
+    --hash=sha256:24ec1f739aec2c5766c68027ccc70d91d7b0cb931699442f5c7ed93515b955e7
 jaraco-functools==4.0.0 \
     --hash=sha256:c279cb24c93d694ef7270f970d499cab4d3813f4e08273f95398651a634f0925 \
     --hash=sha256:daf276ddf234bea897ef14f43c4e1bf9eefeac7b7a82a4dd69228ac20acff68d
