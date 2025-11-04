@@ -40,6 +40,7 @@ jobs:
         python -m pip install -r requirements/test.txt
         python -m pip install .
         pytest tests/
+
   test-build:
     name: "test-build"
     runs-on: "ubuntu-latest"
@@ -64,6 +65,12 @@ jobs:
       run: |
         SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct) \
         python -m build
+
+    - name: "Verify wheel metadata"
+      run: |
+        pip install wheel
+        python -m wheel unpack dist/*.whl -d unpacked
+        cat unpacked/*/*.dist-info/METADATA
 
     # Create hashes of all the built distributables.
     # This is the input for "subject" of the SLSA builder.
